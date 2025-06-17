@@ -94,6 +94,12 @@ curl -i -X POST http://localhost:8080/characters \
 curl -i -X GET http://localhost:8080/characters
 ```
 
+## Ejecutar test unitarios
+
+```bash
+go test ./...
+```
+
 ## Diagrama de Flujo
 
 

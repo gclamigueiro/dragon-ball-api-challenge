@@ -24,10 +24,10 @@ type service struct {
 	repository Repository
 }
 
-func NewService(dgzClient dragonball.Client, storage Repository) Service {
+func NewService(dgzClient dragonball.Client, repository Repository) Service {
 	return &service{
 		dgzClient:  dgzClient,
-		repository: storage,
+		repository: repository,
 	}
 }
 
