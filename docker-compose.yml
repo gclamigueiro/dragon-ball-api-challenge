@@ -1,0 +1,47 @@
+services:
+  api:
+    container_name: dragon-ball-api-server
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      - API_PORT=8080
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=dragon_ball
+      - DB_API_BASE_URL=https://dragonball-api.com/api   
+    ports:
+      - "8080:8080"
+    networks:
+      - dragon-ball-api-net
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    container_name: dragon-ball-api-postgres
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=dragon_ball
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - dragon-ball-api-net 
+    volumes:
+      - dg_api_postgres_data:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql  
+
+volumes:
+  dg_api_postgres_data:
+
+networks:
+  dragon-ball-api-net:
