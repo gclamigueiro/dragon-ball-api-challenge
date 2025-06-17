@@ -13,7 +13,6 @@ import (
 
 func main() { // Initialize the application
 
-	// Load .env file (optional, for local development)
 	if err := godotenv.Load(".env.local"); err != nil {
 		log.Println("No .env file found, using environment variables")
 	}
@@ -30,8 +29,6 @@ func main() { // Initialize the application
 	})
 
 	dgClient := dragonball.NewClient(cfg.DBAPIBaseURL)
-
-	// Inittializing character service
 
 	// Set up repository, service, and handler
 	repo := character.NewStorage(db)
