@@ -38,7 +38,7 @@ func (s *service) GetByName(name string) (*Character, error) {
 		return nil, ErrNameEmpty
 	}
 
-	// Try to find in local DB
+	// Try to find the character in the local database
 	character, err := s.repository.FindByName(name)
 	if err != nil {
 		return nil, fmt.Errorf("%w: %v", ErrDatabase, err)

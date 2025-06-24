@@ -55,7 +55,7 @@ func TestService_GetByName_EmptyName(t *testing.T) {
 	assert.Nil(t, result)
 }
 
-func TestService_GetByName_NotFoundAnywhere(t *testing.T) {
+func TestService_GetByName_NotFound(t *testing.T) {
 	mockRepo := new(mocks.Repository)
 	mockClient := new(mock_dragonball.Client)
 	svc := character.NewService(mockClient, mockRepo)

@@ -19,15 +19,9 @@ Se siguió una estructura de proyecto basada en dominios. En este enfoque, la ap
 
 ## Endpoints
 
-- `POST /characters` 
+- `GET /characters/:name`
 
   Consulta un personaje por nombre.  
-
-  **Body:**
-
-  ```json
-  { "name": "Goku" }
-  ```
 
 - `GET /characters`  
 
@@ -83,9 +77,7 @@ Se pueden usar los siguientes comandos `curl`:
 **Consultar un personaje**
 
 ```bash
-curl -i -X POST http://localhost:8080/characters \
-  -H "Content-Type: application/json" \
-  -d '{"name": "Goku"}'
+curl -i -X GET http://localhost:8080/characters/Goku
 ```
 
 **Listar todos los personajes**
@@ -125,7 +117,7 @@ sequenceDiagram
 ```
 
 
-### 2. Consulta de personaje (`POST /characters`)
+### 2. Consulta de personaje (`GET /characters/:name`)
 
 Este diagrama muestra cómo se maneja una solicitud para consultar un personaje por nombre.  
 
@@ -138,7 +130,7 @@ sequenceDiagram
     participant DB as db/db.go
     participant API as dragonball/client/client.go
 
-    User->>Handler: POST /characters {"name": "Goku"}
+    User->>Handler: GET /characters/Goku
     Handler->>Service: Buscar personaje por nombre
     Service->>Repo: Buscar en base de datos local
     Repo->>DB: SELECT characters WHERE LOWER(name) LIKE LOWER("Goku")

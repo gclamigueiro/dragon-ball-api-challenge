@@ -16,21 +16,21 @@ func NewHandler(service Service) *Handler {
 
 func (h *Handler) RegisterRoutes(r *gin.Engine) {
 	group := r.Group("/characters")
-	group.POST("", h.GetByName) // POST /characters
-	group.GET("", h.GetAll)     // GET /characters
+	group.GET("/:name", h.GetByName) // GET /characters/:name
+	group.GET("", h.GetAll)          // GET /characters
 }
 
 type getByNameRequest struct {
-	Name string `json:"name" binding:"required"`
+	Name string `uri:"name" binding:"required"`
 }
 
-// GetByName handles POST /characters
+// GetByName handles GET /characters/:name
 func (h *Handler) GetByName(c *gin.Context) {
 	var req getByNameRequest
 
-	// Bind and validate JSON body
-	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Missing or invalid 'name'"})
+	// Bind the request parameters
+	if err := c.ShouldBindUri(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request parameters"})
 		return
 	}
 
